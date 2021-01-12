@@ -1,6 +1,6 @@
 IMAGE_NAME = "centos/7"
 MASTERS = 1
-NODES = 2
+NODES = 3
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
