@@ -1,5 +1,6 @@
 ## RHEL7 - Use below
 IMAGE_NAME = "generic/rhel7"
+
 ## RHEL8 - Use below
 ## IMAGE_NAME = "generic/rhel8" 
 
