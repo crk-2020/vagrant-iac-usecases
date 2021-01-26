@@ -1,0 +1,18 @@
+---
+# cofigure ansible nodes
+
+- hosts: all
+  become: true
+  vars_files:
+  vars:
+    remote_user_name: vagrant
+    remote_user_private_key_file: '/vagrant/files/ansible-key'
+    remote_user_public_key_file: '/vagrant/files/ansible-key.pub'
+    remote_user_public_key: "{{lookup('file', remote_user_public_key_file )}}"
+
+  tasks:
+    - name: Add Public key to managed node
+      authorized_key:
+        user: "{{ remote_user_name }}"
+        key: "{{ remote_user_public_key }}"
+        manage_dir: yes

@@ -1,0 +1,1 @@
+ansible-playbook -i /vagrant/files/sample-inventory /vagrant/files/nodes-init.yaml
