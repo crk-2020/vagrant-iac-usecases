@@ -1,5 +1,10 @@
-IMAGE_NAME = "generic/rhel7" 
-NODE_NAME = "rhel7-vm"
+## RHEL7 - Use below
+IMAGE_NAME = "generic/rhel7"
+
+## RHEL8 - Use below
+## IMAGE_NAME = "generic/rhel8" 
+
+NODE_NAME = "rhel-vm"
 
 Vagrant.configure("2") do |config|
     #config.ssh.insert_key = false
