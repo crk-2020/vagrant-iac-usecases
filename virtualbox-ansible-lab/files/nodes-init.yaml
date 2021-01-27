@@ -12,3 +12,11 @@
           192.168.50.11 ansible-engine-1
           192.168.50.21 ansible-node-1 node1
           192.168.50.22 ansible-node-2 node2
+
+    - name: Install Packages
+      yum: 
+          name: {{ item }} 
+          state: present
+      with_items:
+         - git
+         - vim
