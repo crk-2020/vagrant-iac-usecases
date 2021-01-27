@@ -3,16 +3,12 @@
 
 - hosts: all
   become: true
-  vars_files:
-  vars:
-    remote_user_name: vagrant
-    remote_user_private_key_file: '/vagrant/files/ansible-key'
-    remote_user_public_key_file: '/vagrant/files/ansible-key.pub'
-    remote_user_public_key: "{{lookup('file', remote_user_public_key_file )}}"
 
   tasks:
-    - name: Add Public key to managed node
-      authorized_key:
-        user: "{{ remote_user_name }}"
-        key: "{{ remote_user_public_key }}"
-        manage_dir: yes
+    - name: Update /etc/hosts with node entries
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          192.168.50.11 ansible-engine-1
+          192.168.50.21 ansible-node-1 node1
+          192.168.50.22 ansible-node-2 node2

@@ -3,23 +3,11 @@
 
 - hosts: all
   become: true
-  vars_files:
+
   vars:
     remote_user_name: vagrant
-    remote_user_private_key_file: '/vagrant/files/ansible-key'
-    remote_user_public_key_file: '/vagrant/files/ansible-key.pub'
-    remote_user_public_key: "{{lookup('file', remote_user_public_key_file )}}"
 
   tasks:
-    - name: Copy Private Key (Only for Engine node)
-      copy:
-        src: "{{ remote_user_private_key_file }}"
-        dest: "/home/{{ remote_user_name }}/.ssh/id_rsa"
-        mode: '0600'
-        owner: vagrant
-        group: vagrant
-      when: inventory_hostname == 'ansible-engine-1'
-
     - name: Copy Sample Inventory to Vagrant user home
       copy:
         src: '/vagrant/files/sample-inventory'
