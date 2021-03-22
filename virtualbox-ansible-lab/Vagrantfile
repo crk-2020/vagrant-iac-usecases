@@ -1,6 +1,6 @@
 IMAGE_NAME = "centos/8"
 ANSIBLE_ENGINE = 1
-ANSIBLE_NODES = 2
+ANSIBLE_NODES = 0
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
@@ -38,6 +38,7 @@ Vagrant.configure("2") do |config|
         config.vm.define "ansible-engine-#{i}" do |ansible|
             ansible.vm.box = IMAGE_NAME
             ansible.vm.network "private_network", ip: "192.168.50.#{i + 10}", virtualbox__intnet: "intnet"
+            ansible.vm.network "public_network", ip: "192.168.1.185"
             ansible.vm.hostname = "ansible-engine-#{i}"
 
             # naming the virtualmachine
@@ -58,7 +59,8 @@ Vagrant.configure("2") do |config|
             end
             
             # execute nodes-init.yaml for configuring other ansible nodes.
-            ansible.vm.provision :shell, path: "files/nodes-init-playbook.sh"
+            ## disabled for engine only setup
+            ## ansible.vm.provision :shell, path: "files/nodes-init-playbook.sh"
         end
     end
 end
