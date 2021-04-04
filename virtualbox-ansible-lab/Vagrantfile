@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
         # execute nodes-sshd.sh for configuring ssh.
         ansible.vm.provision :shell, path: "files/nodes-sshd.sh"
         
-        # 1. Expecting the project directory conte available at /vagrant.
+        # 1. Expecting the project directory contents available at /vagrant.
         # 2. Using ansible_local to avoid any additional ansible requirement on
         #    host machine (eg: Windows). Vagrant will install ansible on target machine
         #    and complete the initial configuration.
