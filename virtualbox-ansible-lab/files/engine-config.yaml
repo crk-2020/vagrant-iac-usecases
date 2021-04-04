@@ -14,3 +14,18 @@
         dest: "/home/{{ remote_user_name }}/inventory"
         mode: '0755'
       when: inventory_hostname == 'ansible-engine-1'
+
+    - name: Install Packages
+      yum: 
+        name: 
+          - git
+          - vim
+        state: present
+
+    - name: Update /etc/hosts with node entries
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          192.168.50.11 ansible-engine-1
+          192.168.50.21 ansible-node-1 node1
+          192.168.50.22 ansible-node-2 node2        

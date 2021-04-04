@@ -15,7 +15,7 @@
 
     - name: Install Packages
       yum: 
-          name: 
-            - git
-            - vim
-          state: present
+        name: 
+          - git
+          - vim
+        state: present
