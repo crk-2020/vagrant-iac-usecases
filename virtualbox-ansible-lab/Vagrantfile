@@ -1,16 +1,9 @@
-## Variables to control Image type, Nodes etc.
 IMAGE_NAME = "centos/8"
+ANSIBLE_ENGINE = 1
 ANSIBLE_NODES = 0
-
-## ANSILBE_ENGINE_IP = "192.168.1.185"
-
+ANSILBE_ENGINE_IP = "192.168.1.185"
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
-
-    config.vm.provider "virtualbox" do |v|
-        v.memory = 2048
-        v.cpus = 1
-    end  
 
     (1..ANSIBLE_NODES).each do |i|
         config.vm.define "ansible-node-#{i}" do |node|
@@ -18,8 +11,8 @@ Vagrant.configure("2") do |config|
             node.vm.network "private_network", ip: "192.168.50.#{i + 20}", virtualbox__intnet: "intnet"
             node.vm.hostname = "ansible-node-#{i}"
 
-            # set VM name, CPU and memoery
-            ansible.vm.provider :virtualbox do |vb|
+            # naming the virtualmachine
+            node.vm.provider :virtualbox do |vb|
                 vb.name = "ansible-node-#{i}"
                 vb.memory = 1024
                 vb.cpus = 1
@@ -38,79 +31,42 @@ Vagrant.configure("2") do |config|
         end
     end
 
-    ## Ansible-Engine Node - Single VM
-    config.vm.define "ansible-engine" do |ansible|
-        ansible.vm.box = IMAGE_NAME
-        ansible.vm.network "private_network", ip: "192.168.50.11", virtualbox__intnet: "intnet"
     
-        ## below interface has been disables becasuse different machines will have different bridge interface.
-        ## you can enable this back and use for additional bridged interface on ansible engine node.
-        # ansible.vm.network "public_network", ip: ANSILBE_ENGINE_IP
-        
-        ansible.vm.hostname = "ansible-engine"
-        
-        # set VM name, CPU and memoery
-        ansible.vm.provider :virtualbox do |vb|
-            vb.name = "ansible-engine"
-            vb.memory = 2048
-            vb.cpus = 1
-        end        
-    
-        # execute nodes-sshd.sh for configuring ssh.
-        ansible.vm.provision :shell, path: "files/nodes-sshd.sh"
-        
-        # 1. Expecting the project directory conte available at /vagrant.
-        # 2. Using ansible_local to avoid any additional ansible requirement on
-        #    host machine (eg: Windows). Vagrant will install ansible on target machine
-        #    and complete the initial configuration.
-        ansible.vm.provision "ansible_local" do |ansible|
-            ansible.compatibility_mode = "2.0"
-            ansible.playbook = "/vagrant/files/engine-config.yaml"
-            ansible.extra_vars = {
-                node_ip: "192.168.50.11",
-            }
+    (1..ANSIBLE_ENGINE).each do |i| 
+        config.vm.define "ansible-engine-#{i}" do |ansible|
+            ansible.vm.box = IMAGE_NAME
+            ansible.vm.network "private_network", ip: "192.168.50.#{i + 10}", virtualbox__intnet: "intnet"
+
+            ## below interface has been disables as different machines will have different bridge interface.
+            ## you can enable this back and use for additional bridged interface on ansible engine node.
+            # ansible.vm.network "public_network", ip: ANSILBE_ENGINE_IP
+            ansible.vm.hostname = "ansible-engine"
+
+            # naming the virtualmachine
+            ansible.vm.provider :virtualbox do |vb|
+                vb.name = "ansible-engine"
+                vb.memory = 2048
+                vb.cpus = 1
+            end
+
+            # execute nodes-sshd.sh for configuring ssh.
+            ansible.vm.provision :shell, path: "files/nodes-sshd.sh"
+            
+            # 1. Expecting the project directory conte available at /vagrant.
+            # 2. Using ansible_local to avoid any additional ansible requirement on
+            #    host machine (eg: Windows). Vagrant will install ansible on target machine
+            #    and complete the initial configuration.
+            ansible.vm.provision "ansible_local" do |ansible|
+                ansible.compatibility_mode = "2.0"
+                ansible.playbook = "/vagrant/files/engine-config.yaml"
+                ansible.extra_vars = {
+                    node_ip: "192.168.50.#{i + 10}",
+                }
+            end
+            
+            # execute nodes-init.yaml for configuring other ansible nodes.
+            ## disabled for engine only setup
+            ## ansible.vm.provision :shell, path: "files/nodes-init-playbook.sh"
         end
-        
-        # execute nodes-init.yaml for configuring other ansible nodes.
-        ## disabled for engine only setup
-        ## ansible.vm.provision :shell, path: "files/nodes-init-playbook.sh"
     end
-
-
-    ## loop engine to be removed
-###    (1..ANSIBLE_ENGINE).each do |i| 
-###        config.vm.define "ansible-engine-#{i}" do |ansible|
-###            ansible.vm.box = IMAGE_NAME
-###            ansible.vm.network "private_network", ip: "192.168.50.#{i + 10}", virtualbox__intnet: "intnet"
-###
-###            ## below interface has been disables as different machines will have different bridge interface.
-###            ## you can enable this back and use for additional bridged interface on ansible engine node.
-###            # ansible.vm.network "public_network", ip: ANSILBE_ENGINE_IP
-###            ansible.vm.hostname = "ansible-engine-#{i}"
-###
-###            # naming the virtualmachine
-###            ansible.vm.provider :virtualbox do |vb|
-###                vb.name = "ansible-engine-#{i}"
-###            end
-###
-###            # execute nodes-sshd.sh for configuring ssh.
-###            ansible.vm.provision :shell, path: "files/nodes-sshd.sh"
-###            
-###            # 1. Expecting the project directory conte available at /vagrant.
-###            # 2. Using ansible_local to avoid any additional ansible requirement on
-###            #    host machine (eg: Windows). Vagrant will install ansible on target machine
-###            #    and complete the initial configuration.
-###            ansible.vm.provision "ansible_local" do |ansible|
-###                ansible.compatibility_mode = "2.0"
-###                ansible.playbook = "/vagrant/files/engine-config.yaml"
-###                ansible.extra_vars = {
-###                    node_ip: "192.168.50.#{i + 10}",
-###                }
-###            end
-###            
-###            # execute nodes-init.yaml for configuring other ansible nodes.
-###            ## disabled for engine only setup
-###            ## ansible.vm.provision :shell, path: "files/nodes-init-playbook.sh"
-###        end
-###    end
 end
