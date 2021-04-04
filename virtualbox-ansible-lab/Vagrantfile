@@ -1,11 +1,6 @@
 IMAGE_NAME = "centos/8"
 ANSIBLE_ENGINE = 1
-<<<<<<< HEAD
-ANSIBLE_NODES = 0
-=======
-ANSIBLE_NODES = 1
->>>>>>> f0fcf0d0da3ef568536035abee60877156e1efd0
-
+ANSIBLE_NODES = 2
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
 
