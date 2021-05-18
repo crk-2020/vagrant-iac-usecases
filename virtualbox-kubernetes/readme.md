@@ -13,7 +13,7 @@ $ vagrant up
 
 Wait for nodes to power on and install packages (5-10 min depends on your configuration)
 
-**Access the Cluster**
+## Access the Cluster
 
 ```shell
 ## login to master node
@@ -30,7 +30,7 @@ node-1       NotReady   <none>                 11m   v1.21.1
 node-2       NotReady   <none>                 69s   v1.21.1      
 ```
 
-**Install Calico Network**
+## Install Calico Network
 
 You can choose other network options as needed.
 
