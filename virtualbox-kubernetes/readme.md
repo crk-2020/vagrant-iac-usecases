@@ -49,19 +49,30 @@ vagrant@k8s-master:/vagrant$ kubectl get po -n kube-system |grep calico
 vagrant@k8s-master:/vagrant$ kubectl get po -n kube-system |grep coredns
 ```
 
-## Install Dashboard
+## Install and Access Dashboard
 
 ```shell
 ## install dashboard resources
 vagrant@k8s-master:~$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
 
-## Enable proxy
-vagrant@k8s-master:~$ kubectl proxy
-Starting to serve on 127.0.0.1:8001
+## Get Token to Access Dashboard
+vagrant@k8s-master:~$ KUBETOKEN=$(kubectl -n kube-system get secret | grep default-token | awk '{print $1}')
 
-## Now you can open the url from you host browser
-## port forwarding has been enabled as part of Vagrantfile
+## Copy Token Value from below command
+vagrant@k8s-master:~$ kubectl -n kube-system describe secret ${KUBETOKEN} | grep token: | awk '{print $2}'
 ```
+
+Note: You can also create a seperate user for accessing the dashboard; refer [Creating Sample User documentation](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md).
+
+**Enable proxy**
+
+```shell
+vagrant@k8s-master:~$ kubectl proxy --address='0.0.0.0'
+Starting to serve on [::]:8001
+```
+
+Now you can open the url from you host machine browser. (Port forwarding has been enabled as part of `Vagrantfile`)
+
 
 **Notes:**
 
