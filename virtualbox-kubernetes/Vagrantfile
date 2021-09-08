@@ -1,4 +1,5 @@
-IMAGE_NAME = "bento/ubuntu-16.04"
+#IMAGE_NAME = "bento/ubuntu-16.04"
+IMAGE_NAME = "bento/ubuntu-20.04"
 NODES = 2
 
 Vagrant.configure("2") do |config|

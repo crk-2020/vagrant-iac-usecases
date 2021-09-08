@@ -9,7 +9,10 @@
   tasks:
 
     - name: install system updates
-      yum: name=* state=latest update_cache=yes
+      yum: 
+        name: *
+        state: latest 
+        update_cache: yes
 
     - name: Disable SELinux
       selinux:
