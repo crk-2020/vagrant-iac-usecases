@@ -1,6 +1,7 @@
 #IMAGE_NAME = "bento/ubuntu-16.04"
 IMAGE_NAME = "bento/ubuntu-20.04"
 NODES = 2
+CLUSTER_NAME = "demo"
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
@@ -16,7 +17,7 @@ Vagrant.configure("2") do |config|
         master.vm.hostname = "k8s-master"
         # customize virtualmachine
         master.vm.provider :virtualbox do |vb|
-            vb.name = "k8s-master"
+            vb.name = "#{CLUSTER_NAME}-k8s-master"
             vb.memory = 2048
             vb.cpus = 2
         end
