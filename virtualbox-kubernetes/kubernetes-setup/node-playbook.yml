@@ -97,6 +97,22 @@
       name: kubelet
       daemon_reload: yes
       state: restarted
+      
+  - name: Fix cgroup issue
+    # https://stackoverflow.com/questions/52119985/kubeadm-init-shows-kubelet-isnt-running-or-healthy
+    copy:
+      content: |
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"]
+        }
+      dest: /etc/docker/daemon.json
+
+  - name: Restart docker
+    service:
+      name: docker
+      daemon_reload: yes
+      state: restarted
+
 # Step 3.2: Join the nodes to the Kubernetes cluster using below code.
   - name: Copy the join command to server location
     copy: src=join-command dest=/tmp/join-command.sh mode=0777

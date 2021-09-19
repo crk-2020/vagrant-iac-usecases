@@ -92,6 +92,21 @@
       path: /etc/default/kubelet
       line: KUBELET_EXTRA_ARGS=--node-ip={{ node_ip }}
 
+  - name: Fix cgroup issue
+    # https://stackoverflow.com/questions/52119985/kubeadm-init-shows-kubelet-isnt-running-or-healthy
+    copy:
+      content: |
+        {
+          "exec-opts": ["native.cgroupdriver=systemd"]
+        }
+      dest: /etc/docker/daemon.json
+
+  - name: Restart docker
+    service:
+      name: docker
+      daemon_reload: yes
+      state: restarted
+
   - name: Restart kubelet
     service:
       name: kubelet
@@ -100,7 +115,7 @@
 
 # Step 2.3: Initialize the Kubernetes cluster with kubeadm using the below code (applicable only on master node).
   - name: Initialize the Kubernetes cluster using kubeadm
-    command: kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
+    command: sudo kubeadm init --apiserver-advertise-address="192.168.50.10" --apiserver-cert-extra-sans="192.168.50.10"  --node-name k8s-master --pod-network-cidr=192.168.0.0/16
 
 # Step 2.4: Setup the kube config file for the vagrant user to access the Kubernetes cluster using the below code.
   - name: Setup kubeconfig for vagrant user
