@@ -80,3 +80,13 @@ Now you can open the url from you host machine browser. (Port forwarding has bee
 2. Ansible will be installed inside the VM to keep compatibility on Windows; so no Ansible prerequisite on main host.
 3. You can adjust the number of worker nodes by editing `NODES = 2` inside the Vagrantfile.
 
+
+# References
+
+There are many guides to deploy kubernetes using Vagrant and VirtualBox; if above solution is not working for you, you maye refer other references as well.
+
+- [Kubernetes Setup Using Ansible and Vagrant](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
+- [How To Create a Kubernetes Cluster Using Kubeadm on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-create-a-kubernetes-cluster-using-kubeadm-on-ubuntu-18-04)
+- [How to Setup Kubernetes Cluster on Vagrant VMs](https://devopscube.com/kubernetes-cluster-vagrant/)
+- [Container runtimes](https://kubernetes.io/docs/setup/production-environment/container-runtimes)
+- [How to create a Kubernetes cluster with Kubeadm and Ansible on Ubuntu 20.04](https://www.arubacloud.com/tutorial/how-to-create-kubernetes-cluster-with-kubeadm-and-ansible-ubuntu-20-04.aspx)
