@@ -1,0 +1,100 @@
+[automationcontroller]
+localhost ansible_connection=local
+
+[automationhub]
+ansibleautomationhub ansible_host=192.168.99.108 
+
+[database]
+
+[servicescatalog_workers]
+
+[all:vars]
+admin_password='aapadmin'
+
+pg_host=''
+pg_port=''
+
+pg_database='awx'
+pg_username='awx'
+pg_password='aapadmin'
+pg_sslmode='prefer'  # set to 'verify-full' for client-side enforced SSL
+
+# Execution Environment Configuration
+# Credentials for container registry to pull execution environment images from,
+# comment out registry_username if authentication is not required
+registry_url='registry.redhat.io'
+registry_username='6603759|aapdemo'
+registry_password='eyJhbGciOiJSUzUxMiJ9.eyJzdWIiOiI0ODdhY2ZiZDQ4OWY0MGQ0ODk2YjdjYWRkMjE2OTg5MCJ9.NFwVJXcRIcGpRMKgqBnA71RzoIMP93jXlcoJPla7pL461lGgPAZNVkm-zeKnzmP1NEbizkAiTyH4Dp-WKL6NX4CGVtEhFQU-qTH5PI0RXV_TtMaY2UGyw0jaGyvL9YhMRM2_U7gRsOwu_Iguyad5gbyVi9ybSJvCbXZx3XGgb-uFx2TyR_8CZMF-iz43by0dysiVwAVc52Zp3d4ehzj1D_pfotwFCcMGVGwmizImL0ZQBaV60LkA2ABmH5kcPAHst56_ff-D63V6a0Rv9NuxATR5d0QbvoHzwfZ-yjo5Ie8FPspGGaSjBxBDQ5z-4_dl9y816DaUtvR8gEAGG13epLef_RJ2k1Jk8N-8j1_RrbbBy8EBqHDkIMny7GBSqLJUhlTBlrLzeDqhxSWBcRo7ONKFGxtfTko2oujHzqFCmsiRjjlSLlmzs-6HVhigbHfS_jED8LViw4MRYdKwNLGgjAq1RpVBfuU4xxT--euS2SP4vzCiOMe2NqVIzaDPSJZL9MKNp-PcViOKGxpT0R94sTlrOI9hTGiVbQJpemGsgJM5HDJqg3tyvuA6kot3mMnsaHmUBhZxm0miWmqrhJO_J23HuC0nzysiR5xNf0gLf2-7DPjEBubOaeT_Ie1BZoAwbZwTkcFQm2O9hDbeiSXW7tmz_Io7fcD89stMEtdE8ac'
+
+# Automation Hub Configuration
+#
+
+automationhub_admin_password='aapadmin'
+
+automationhub_pg_host=''
+automationhub_pg_port=''
+
+automationhub_pg_database='automationhub'
+automationhub_pg_username='automationhub'
+automationhub_pg_password='aapadmin'
+automationhub_pg_sslmode='prefer'
+
+# By default if the automation hub package and its dependencies
+# are installed they won't get upgraded when running the installer
+# even if newer packages are available. One needs to run the ./setup.sh
+# script with the following set to True.
+#
+# automationhub_upgrade = False
+
+# By default when one uploads collections to Automation Hub
+# an admin needs to approve it before it is made available
+# to the users. If one wants to disble the content approval
+# flow, the following setting should be set to False.
+#
+# automationhub_require_content_approval = True
+
+# At import time collections can go through a series of checks.
+# Behaviour is driven by galaxy-importer.cfg configuration.
+# Example are ansible-doc, ansible-lint, flake8, ...
+#
+# The following parameter allow one to drive this configuration.
+# This variable is expected to be a dictionnary.
+#
+# automationhub_importer_settings = None
+
+# The default install will deploy a TLS enabled Automation Hub.
+# If for some reason this is not the behavior wanted one can
+# disable TLS enabled deployment.
+#
+# automationhub_disable_https = False
+
+# The default install will deploy a TLS enabled Automation Hub.
+# Unless specified otherwise the HSTS web-security policy mechanism
+# will be enabled. This setting allows one to disable it if need be.
+#
+# automationhub_disable_hsts = False
+
+# The default install will generate self-signed certificates for the Automation
+# Hub service. If you are providing valid certificate via automationhub_ssl_cert
+# and automationhub_ssl_key, one should toggle that value to True.
+#
+# automationhub_ssl_validate_certs = False
+
+# SSL-related variables
+
+# If set, this will install a custom CA certificate to the system trust store.
+# custom_ca_cert=/path/to/ca.crt
+
+# Certificate and key to install in nginx for the web UI and API
+# web_server_ssl_cert=/path/to/tower.cert
+# web_server_ssl_key=/path/to/tower.key
+
+# Certificate and key to install in Automation Hub node
+# automationhub_ssl_cert=/path/to/automationhub.cert
+# automationhub_ssl_key=/path/to/automationhub.key
+
+# Server-side SSL settings for PostgreSQL (when we are installing it).
+# postgres_use_ssl=False
+# postgres_ssl_cert=/path/to/pgsql.crt
+# postgres_ssl_key=/path/to/pgsql.key
+

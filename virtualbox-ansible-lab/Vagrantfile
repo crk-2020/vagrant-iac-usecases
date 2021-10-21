@@ -1,6 +1,6 @@
 IMAGE_NAME = "centos/8"
 
-ANSIBLE_NODES = 0
+ANSIBLE_NODES = 2
 
 ## only needed if you are using ansible engine vm with bridged network
 #ANSILBE_ENGINE_IP = "192.168.1.185"
