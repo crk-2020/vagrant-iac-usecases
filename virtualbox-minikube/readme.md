@@ -30,7 +30,7 @@ minikube will be installed and running with default components. If you want to e
 
 Eg: Enable `metrics-server`
 
-```
+```shell
 [vagrant@centos-minikube ~]$ sudo minikube addons enable metrics-server
 * The 'metrics-server' addon is enabled
 ```

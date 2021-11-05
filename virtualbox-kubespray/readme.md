@@ -1,7 +1,6 @@
 # kubernetes cluster with Kubespray
 Vagrant and Ansible
 
-
 # Deploy cluster by execute cluster.yml playbook
 
 ```
