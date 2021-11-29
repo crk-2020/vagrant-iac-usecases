@@ -1,0 +1,71 @@
+---
+# cofigure kubernetes nodes with users and access
+
+- hosts: all
+  become: true
+
+  vars:
+    remote_user_name: ansible
+    remote_user_password: ansible
+
+  tasks:
+    - name: Create new user on managed node
+      user:
+        name: "{{ remote_user_name }}"
+        password: "{{ remote_user_password }}"
+        #password: "{{ remote_user_password | password_hash('sha512') }}"
+        groups: wheel
+        append: yes
+      when: inventory_hostname == 'ansible'
+    
+    - name: Add sudo entries for new user
+      copy:
+        content: "{{ remote_user_name }} ALL=(ALL) NOPASSWD: ALL"
+        dest: "/etc/sudoers.d/{{ remote_user_name }}"
+      when: inventory_hostname == 'ansible'
+    
+    - name: Generate an OpenSSH keypair
+      community.crypto.openssh_keypair:
+        path: /tmp/id_ssh_rsa
+        size: 4096
+        type: rsa
+        comment: "ansible@ansible"
+      delegate_to: localhost
+      become: false
+      when: inventory_hostname == 'ansible'
+
+    - name: Copy Sample files to devops user home
+      copy:
+        src: "{{ item }}"
+        dest: "/home/{{ remote_user_name }}/{{ item }}"
+        mode: '0755'
+        force: yes
+      with_items:
+        - inventory
+        - ansible.cfg
+      when: inventory_hostname == 'ansible'
+
+    - name: Install ansible using pip
+      pip:
+        name: ansible
+        extra_args: --user
+      become: true
+      become_user: "{{ remote_user_name }}"
+      when: inventory_hostname == 'ansible'
+
+    - name: Install Packages
+      yum: 
+        name: 
+          - git
+          - vim
+        state: present
+      when: rhsubs is defined
+
+    - name: Update /etc/hosts with node entries
+      blockinfile:
+        path: /etc/hosts
+        block: |
+          192.168.100.10 ansible
+          192.168.100.4 dev-rhel8-55
+      become: true
+    
