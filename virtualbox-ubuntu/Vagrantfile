@@ -6,7 +6,7 @@ VM_NAME = "ubuntu"
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
-    
+    #config.vbguest.auto_update = false
 
     # create ansible controlnode
     config.vm.define "node" do |node|
