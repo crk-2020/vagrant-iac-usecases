@@ -2,7 +2,7 @@
 ansible ansible_host=192.168.100.10 ansible_connection=local
 
 [nodes]
-dev-rhel8-55 ansible_host=192.168.100.4
+SYSADMIN-RHEL8 ansible_host=192.168.100.4
 
 [all:vars]
 ansible_user=devops

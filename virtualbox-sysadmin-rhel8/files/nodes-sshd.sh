@@ -15,7 +15,7 @@ echo 'devops ALL=(ALL) NOPASSWD: ALL' | sudo tee /etc/sudoers.d/devops
 #echo '[ansible]' > /home/devops/inventory
 #echo 'ansible-engine ansible_host=${aws_instance.ansible-engine.private_dns} ansible_connection=local' >> /home/devops/inventory
 #echo '[nodes]' >> /home/devops/inventory
-#echo 'dev-rhel8-55 ansible_host=182.168.100.4' >> /home/devops/inventory
+#echo 'SYSADMIN-RHEL8 ansible_host=182.168.100.4' >> /home/devops/inventory
 #echo 'node2 ansible_host=${aws_instance.ansible-nodes[1].private_dns}' >> /home/devops/inventory
 #echo '' >> /home/devops/inventory
 #echo '[all:vars]' >> /home/devops/inventory

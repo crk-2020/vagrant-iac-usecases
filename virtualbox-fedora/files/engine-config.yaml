@@ -96,7 +96,7 @@
         path: /etc/hosts
         block: |
           192.168.100.10 ansible
-          192.168.100.4 dev-rhel8-55
+          192.168.100.4 fedora
       become: true
     
     - name: Create {{ remote_user_name }} user on managed nodes
