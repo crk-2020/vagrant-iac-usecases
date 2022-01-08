@@ -155,15 +155,21 @@ Refer [Vagrant Documentation](https://www.vagrantup.com/docs/installation/) for 
 
 Vagrant is coming with support for VirtualBox, Hyper-V, and Docker. If you want to create your virtual machine on any other environment (like AWS or Azure) Vagrant still has the ability to manage this but only by using  providers plugins. 
 
-```
+```shell
 vagrant plugin install vagrant-google
-```
-or
 
-```
+# or
+
 vagrant plugin install vagrant-digitalocean 
 vagrant plugin install vagrant-omnibus
 vagrant plugin install vagrant-aws
+```
+
+File transfer between host and guest VM
+
+```shell
+vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-scp
 ```
 
 *If any issues during installation, then try with installing dependencies. (Depends on the workstation machine you are using, packages and version may change)*
