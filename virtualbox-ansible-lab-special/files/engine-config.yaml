@@ -13,6 +13,14 @@
     ansible_content_directory: "/home/ansible/ansible-book"
 
   tasks:
+    - name: Upgrade pip
+      pip:
+        name: pip
+        extra_args: --upgrade
+      #become: true
+      #become_user: "{{ local_user_name }}"
+      when: inventory_hostname == 'ansible'
+
     - name: Create {{ local_user_name }} user on ansible node
       user:
         name: "{{ local_user_name }}"
@@ -70,18 +78,9 @@
       when: inventory_hostname == 'ansible'
 
     - name: Install ansible using pip
-      shell: python -m pip install ansible --user
-      become: true
-      become_user: "{{ local_user_name }}"
+      pip:
+        name: ansible
       when: inventory_hostname == 'ansible'
-
-    #- name: Install ansible using pip
-    #  pip:
-    #    name: ansible
-    #    extra_args: --user
-    #  become: true
-    #  become_user: "{{ local_user_name }}"
-    #  when: inventory_hostname == 'ansible'
 
     - name: Add key to managed nodes
       ansible.posix.authorized_key:
@@ -133,8 +132,9 @@
     
     - name: Recursively change ownership of ansible directory
       file:
-        path: "{{ ansible_content_directory }}"
+        path: "/home/{{ local_user_name }}/"
         state: directory
         recurse: yes
+        force: yes
         owner: "{{ local_user_name }}"
         group: "{{ local_user_name }}"
