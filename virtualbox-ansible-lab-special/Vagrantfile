@@ -35,7 +35,8 @@ Vagrant.configure("2") do |config|
             remotenode.vm.provision "shell", inline: <<-SHELL
                 cat host_ssh_public_key >> /home/vagrant/.ssh/authorized_keys
             SHELL
-
+        
+            remotenode.vm.provision :shell, path: "files/engine-config.sh"
         end
     end
 
