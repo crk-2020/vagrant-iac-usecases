@@ -16,7 +16,7 @@ Wait for nodes to power on and install packages (5-10 min depends on your config
 ## Access the Cluster
 
 ```shell
-## login to master node
+## login to master node (use the correct master node name)
 $ vagrant ssh k8s-master
 
 ## export kubeconfig
