@@ -148,4 +148,5 @@
 # Step 2.7: Setup a handler for checking Docker daemon using the below code.
   handlers:
     - name: docker status
-      service: name=docker state=started    
+      service: name=docker state=started
+      

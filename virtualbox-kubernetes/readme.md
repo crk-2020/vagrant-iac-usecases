@@ -51,9 +51,11 @@ vagrant@k8s-master:/vagrant$ kubectl get po -n kube-system |grep coredns
 
 ## Install and Access Dashboard
 
+Check [documentation](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) for latest version of Kubernetes dashboard.
+
 ```shell
 ## install dashboard resources
-vagrant@k8s-master:~$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+vagrant@k8s-master:~$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.4.0/aio/deploy/recommended.yaml
 
 ## Get Token to Access Dashboard
 vagrant@k8s-master:~$ KUBETOKEN=$(kubectl -n kube-system get secret | grep default-token | awk '{print $1}')
@@ -71,8 +73,13 @@ vagrant@k8s-master:~$ kubectl proxy --address='0.0.0.0'
 Starting to serve on [::]:8001
 ```
 
-Now you can open the url from you host machine browser. (Port forwarding has been enabled as part of `Vagrantfile`)
+Now you can open the url from you host machine browser as `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/` (Port forwarding has been enabled as part of `Vagrantfile`)
 
+## Install Metrics server
+
+```shell
+$ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
 
 **Notes:**
 
