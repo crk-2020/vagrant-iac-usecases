@@ -1,12 +1,11 @@
-IMAGE_NAME = "fedora/34-cloud-base"
-VM_NAME = "fedora-34"
+IMAGE_NAME = "bento/ubuntu-20.04"
+VM_NAME = "Ubuntu-20-CP"
 
 ## only needed if you are using ansible engine vm with bridged network
 #ANSILBE_ENGINE_IP = "192.168.1.185"
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
-    
 
     # create ansible controlnode
     config.vm.define "node" do |node|
@@ -24,7 +23,7 @@ Vagrant.configure("2") do |config|
         # naming the virtualmachine
         node.vm.provider :virtualbox do |vb|
             vb.name = VM_NAME
-            vb.memory = 1024
+            vb.memory = 512
             vb.cpus = 1
             # enable gui as MacOS Monterey got issue with headless vm
             # https://github.com/hashicorp/vagrant/issues/12557

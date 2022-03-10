@@ -1,4 +1,5 @@
-IMAGE_NAME = "centos/8"
+#IMAGE_NAME = "centos/8"
+IMAGE_NAME = "fedora/35-cloud-base"
 
 ANSIBLE_NODES = 2
 
