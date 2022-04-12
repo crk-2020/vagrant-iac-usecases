@@ -73,7 +73,7 @@ vagrant@k8s-master:~$ kubectl proxy --address='0.0.0.0'
 Starting to serve on [::]:8001
 ```
 
-Now you can open the url from you host machine browser as `http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/` (Port forwarding has been enabled as part of `Vagrantfile`)
+Now you can open the url from you host machine browser as [`http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/`](http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/) (Port forwarding has been enabled as part of `Vagrantfile`)
 
 ## Install Metrics server
 
@@ -83,8 +83,8 @@ $ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/la
 
 **Notes:**
 
-1. Tested on linux, mac, windows
-2. Ansible will be installed inside the VM to keep compatibility on Windows; so no Ansible prerequisite on main host.
+1. Tested on linux, mac, ~~Windows~~(Need to adjust Ansible dependancy)
+2. ~~Ansible will be installed inside the VM to keep compatibility on Windows; so no Ansible prerequisite on main host~~. Ansible is required at the moment; you can adjust the value from `node.vm.provision "ansible" do |ansible|` to `node.vm.provision "ansible_local" do |ansible|` for using local Ansible inside VM.
 3. You can adjust the number of worker nodes by editing `NODES = 2` inside the Vagrantfile.
 
 
