@@ -85,7 +85,7 @@ $ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/la
 
 1. Tested on linux, mac, ~~Windows~~(Need to adjust Ansible dependancy)
 2. ~~Ansible will be installed inside the VM to keep compatibility on Windows; so no Ansible prerequisite on main host~~. Ansible is required at the moment; you can adjust the value from `node.vm.provision "ansible" do |ansible|` to `node.vm.provision "ansible_local" do |ansible|` for using local Ansible inside VM.
-3. You can adjust the number of worker nodes by editing `NODES = 2` inside the Vagrantfile.
+3. You can adjust the number of compute nodes by editing `COMPUTE_NODES = 2` inside the Vagrantfile.
 
 
 # References
