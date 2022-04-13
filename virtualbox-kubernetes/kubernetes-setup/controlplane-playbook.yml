@@ -113,9 +113,9 @@
       daemon_reload: yes
       state: restarted
 
-# Step 2.3: Initialize the Kubernetes cluster with kubeadm using the below code (applicable only on master node).
+# Step 2.3: Initialize the Kubernetes cluster with kubeadm using the below code (applicable only on controlplane node).
   - name: Initialize the Kubernetes cluster using kubeadm
-    command: sudo kubeadm init --apiserver-advertise-address={{ apiserver_advertise_address }} --apiserver-cert-extra-sans={{ apiserver_advertise_address }} --node-name k8s-master --pod-network-cidr=192.168.0.0/16
+    command: sudo kubeadm init --apiserver-advertise-address={{ apiserver_advertise_address }} --apiserver-cert-extra-sans={{ apiserver_advertise_address }} --node-name demo-controlplane --pod-network-cidr=192.168.0.0/16
 
 # Step 2.4: Setup the kube config file for the vagrant user to access the Kubernetes cluster using the below code.
   - name: Setup kubeconfig for vagrant user
