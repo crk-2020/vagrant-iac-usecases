@@ -2,7 +2,7 @@
   become: yes
   become_method: sudo
   vars:
-    minikube_version: 1.12.1
+    minikube_version: 1.25.2
     kubectl_version: 1.18.6
     docker_version: 19.03.11
     helm_version: 3.2.4
@@ -10,7 +10,7 @@
 
     - name: install system updates
       yum: 
-        name: *
+        name: "*"
         state: latest 
         update_cache: yes
 
@@ -45,6 +45,7 @@
     - name: install minikube version {{ minikube_version }} rpm
       yum:
         name: /var/tmp/minikube-{{ minikube_version }}.rpm
+        disable_gpg_check: true
 
     - name: delete minikube version {{ minikube_version }} rpm
       file:
