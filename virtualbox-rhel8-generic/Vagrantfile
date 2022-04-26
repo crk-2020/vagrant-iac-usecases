@@ -12,8 +12,11 @@ Vagrant.configure("2") do |config|
 
             ## add a host-only adaptor. 
             ## Change this line as needed if your host-only network name is different :name => 'vboxnet0', , adapter : 2
-            node.vm.network "private_network", type: "dhcp", 
-                name: 'vboxnet12', adapter: 2
+            #node.vm.network "private_network", type: "dhcp", 
+            #    name: 'vboxnet12', adapter: 2
+            node.vm.network "private_network", 
+                name: 'vboxnet0',ip: "192.168.56.100",
+                adapter: 2
             node.vm.hostname = "#{VM_NAME}-#{i}"
 
             # VM customization
